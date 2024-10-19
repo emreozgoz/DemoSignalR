@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZuUAbhd/Ev85yJS3EsYHRmhxzTdIYB1TSIOPZTFe15eqsoxUd/jklg7JM5ZH3P9CRdj5KLG0Fm4X+8sYu+KQDg==",
+  "dgSpecHash": "CuWk1Ybn4YhDw1//P2tsNvsSDnWgzDhs3mTF5CpumLT6m7wzpp4YwdlFbvy+DfaUGSWP29cipb87q64tcJnSHQ==",
   "success": true,
-  "projectFilePath": "C:\\repos\\DemoSignalR\\API\\API.csproj",
+  "projectFilePath": "C:\\repos\\DemoSignalR\\DemoSignalR\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\eozgoz\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\eozgoz\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
