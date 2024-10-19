@@ -1,0 +1,72 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.SignalR.Client
+@using WEB.SignalRConnections
+@rendermode InteractiveServer
+@inject SignalRConnection signalRConnection
+@implements IDisposable
+
+<div class="row">
+    <div class="card col-md-8">
+        <div class="card-header">
+            All People Chat|
+            <a class="btn btn-success btn-sm" @onclick="Connect">Connect</a>
+            <a class="btn btn-danger btn-sm" @onclick="Disconnect">Disconnect</a>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                @if (Messages != null)
+                {
+                    <ul>
+                        @foreach (var data in Messages)
+                        {
+                            <li>@data</li>
+                        }
+                    </ul>
+                }
+            </div>
+            <div class="card-footer">@signalRConnection.ConnectionState</div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@code {
+    HubConnection? ClientHubConnection;
+    List<string> Messages = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        //SignalR bağlantısının durum değişikliklerini dinliyor
+        signalRConnection.ConnectionStateChanged += StateHasChanged;
+        //Bu satırda, SignalR hub'ı üzerinden "AllClientsNotification" adlı olay dinleniyor.
+        // Bu olay, sunucu tarafından tetiklendiğinde bir string parametresi (statement) içeriyor. Olay gerçekleştiğinde:
+        //Mesaj içeriği (statement) Messages koleksiyonuna eklenir.
+        //StateHasChanged metodu çağrılarak Blazor bileşeni yeniden render edilir.
+        // Bu da arayüzde yeni gelen mesajın hemen görüntülenmesini sağlar.
+        signalRConnection.hubConnection.On<string>("AllClientsNotification", (statement) =>
+        {
+            Messages.Add(statement);
+            InvokeAsync(StateHasChanged);
+        });
+        await Connect();
+    }
+
+    async Task Connect()
+    {
+        await signalRConnection.StartConnection();
+    }
+
+    async Task Disconnect()
+    {
+        await signalRConnection.CloseConnection();
+    }
+
+    public void Dispose()
+    {
+        //bir sınıfın ömrü sona erdiğinde veya artık kullanılmayacak duruma geldiğinde,
+        // belleği ve bağlantıları düzgün bir şekilde serbest bırakmak için dispose yöntem kullanılır.
+        signalRConnection.ConnectionStateChanged -= StateHasChanged;
+    }
+} 
