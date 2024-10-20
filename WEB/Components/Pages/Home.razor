@@ -4,53 +4,239 @@
 @rendermode InteractiveServer
 @inject SignalRConnection signalRConnection
 @implements IDisposable
+@inject HttpClient httpClient
 
 <div class="row">
-    <div class="card col-md-8">
-        <div class="card-header">
-            All People Chat|
-            <a class="btn btn-success btn-sm" @onclick="Connect">Connect</a>
-            <a class="btn btn-danger btn-sm" @onclick="Disconnect">Disconnect</a>
-        </div>
+    <div class="col-md-3 mb-4">
         <div class="card">
+            <div class="card-header display-1 fs-4 text-primary">Available Groups</div>
             <div class="card-body">
-                @if (Messages != null)
+                @if (AvailableGroups != null)
                 {
-                    <ul>
-                        @foreach (var data in Messages)
+                    <ul class="list-group">
+                        @foreach (var group in AvailableGroups)
                         {
-                            <li>@data</li>
+                            <li class="list-group-item list-group-item-action" style="cursor:pointer" @onclick="(()=>LoadGroup(group))">
+                                @group
+                            </li>
                         }
                     </ul>
                 }
+                else
+                {
+                    <em>No Group Available</em>
+                }
             </div>
-            <div class="card-footer">@signalRConnection.ConnectionState</div>
         </div>
     </div>
+
+    <div class="col-md-9 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <span class="display-1 fs-4 text-primary">Online Users</span>
+                <a class="btn btn-success btn-sm float-end" @onclick="Connect">Connect</a>
+                <a class="btn btn-danger btn-sm float-end" @onclick="Disconnect">Disconnect</a>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    @if (OnlineUsers != null)
+                    {
+                        <ul>
+                            @foreach (string user in OnlineUsers)
+                            {
+                                <li>@user</li>
+                            }
+                        </ul>
+                    }
+                </div>
+                <div class="card-footer">@signalRConnection.ConnectionState</div>
+            </div>
+        </div>
+    </div>
+    @*   <div class="card col-md-8">
+    <div class="card-header">
+    All People Chat|
+    <a class="btn btn-success btn-sm" @onclick="Connect">Connect</a>
+    <a class="btn btn-danger btn-sm" @onclick="Disconnect">Disconnect</a>
+    </div>
+    <div class="card">
+    <div class="card-body">
+    @if (Messages != null)
+    {
+    <ul>
+    @foreach (var data in Messages)
+    {
+    <li>@data</li>
+    }
+    </ul>
+    }
+    </div>
+    <div class="card-footer">@signalRConnection.ConnectionState</div>
+    </div>
+    </div> *@
+
+    @if (!string.IsNullOrEmpty(GroupName))
+    {
+        <div class="bol-md-3">
+            <div class="card">
+                <div class="card-header display-1 fs-5 text-succes">
+                    @GroupName Members
+                    <button class="btn btnalert-success btn-sm float-end" @onclick="()=>JoinGroup(GroupName)">
+                        Join
+                    </button>
+                </div>
+                <div class="card-body">
+                    @if (GroupMembers != null)
+                    {
+                        <ul>
+                            @foreach (var member in GroupMembers)
+                            {
+                                <li>@member</li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header display-1 fs-5 text-success">@GroupName Chats</div>
+                <div class="card-body">
+                    @if (ChatMessages != null)
+                    {
+                        foreach (var message in ChatMessages)
+                        {
+                            @if (message.Contains(ConnectionId))
+                            {
+                                <div class="card m-2 p-2 border-1 w-25 shadow-lg" style="border-radius:12px; position:relative; left:75%">
+                                    @((MarkupString)FormatDefaultMessage(message))
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="card m-2 p-2 border-1 w-25 shadow-lg" style="border-radius:12px; position:relative; left:0%">
+                                    @((MarkupString)FormatForeignMessage(message))
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+                <div class="card-footer">
+                    <textarea cols="5" @bind="Message" class="form-control mb-3"></textarea>
+                    <button class="btn btn-success float-end" @onclick="SendMessage">Send Message</button>
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
 
 
 
 @code {
-    HubConnection? ClientHubConnection;
-    List<string> Messages = [];
-
+    string Message = string.Empty;
+    string GroupName = string.Empty;
+    IEnumerable<string> GroupMembers = [];
+    IEnumerable<string> AvailableGroups = [];
+    List<string> OnlineUsers = [];
+    List<string> ChatMessages = [];
     protected override async Task OnInitializedAsync()
     {
         //SignalR bağlantısının durum değişikliklerini dinliyor
         signalRConnection.ConnectionStateChanged += StateHasChanged;
+        Subscriptions();
+        await Connect();
+        await GetGroups();
+        //---------------------
         //Bu satırda, SignalR hub'ı üzerinden "AllClientsNotification" adlı olay dinleniyor.
         // Bu olay, sunucu tarafından tetiklendiğinde bir string parametresi (statement) içeriyor. Olay gerçekleştiğinde:
         //Mesaj içeriği (statement) Messages koleksiyonuna eklenir.
         //StateHasChanged metodu çağrılarak Blazor bileşeni yeniden render edilir.
         // Bu da arayüzde yeni gelen mesajın hemen görüntülenmesini sağlar.
-        signalRConnection.hubConnection.On<string>("AllClientsNotification", (statement) =>
+        // signalRConnection.hubConnection.On<string>("AllClientsNotification", (statement) =>
+        // {
+        //     Messages.Add(statement);
+        //     InvokeAsync(StateHasChanged);
+        // });
+        //------------------
+    }
+
+    void Subscriptions()
+    {
+        signalRConnection.hubConnection.On<string>("AllClientsNotification", async (connectionId) =>
+     {
+         await InvokeAsync(() =>
+         {
+             ConnectionId = connectionId;
+             OnlineUsers.Add($"{connectionId} has joined");
+             StateHasChanged();
+         });
+     });
+
+        signalRConnection.hubConnection.On<IEnumerable<string>>("NotifyGroupOfNewJoin", async (groupMembers) =>
         {
-            Messages.Add(statement);
-            InvokeAsync(StateHasChanged);
+            await InvokeAsync(() =>
+            {
+                GroupMembers = groupMembers;
+                StateHasChanged();
+            });
         });
-        await Connect();
+
+        signalRConnection.hubConnection.On<string, string>("Chat", async (connectionId, message) =>
+        {
+            await InvokeAsync(() =>
+            {
+                ChatMessages.Add($"{connectionId}: {message}");
+                StateHasChanged();
+            });
+        });
+
+    }
+
+    static string ConnectionId = string.Empty;
+    async Task SendMessage()
+    {
+        if (!string.IsNullOrEmpty(ConnectionId))
+        {
+            string userGroupName = await httpClient.GetStringAsync($"HubService/GetUserGroupName/{ConnectionId}");
+            await signalRConnection.hubConnection.InvokeAsync("SendMessageToGroup", userGroupName, Message);
+            Message = string.Empty;
+        }
+    }
+    private async Task GetGroups()
+    {
+        AvailableGroups = await httpClient.GetFromJsonAsync<IEnumerable<string>>("HubService/availableGroups");
+    }
+
+    async Task LoadGroup(string groupName)
+    {
+        ChatMessages?.Clear();
+        GroupName = groupName;
+        await GetGroupMembers(groupName);
+        StateHasChanged();
+    }
+
+    async Task JoinGroup(string groupName)
+    {
+        await signalRConnection.hubConnection.InvokeAsync("JoinGroup", groupName);
+    }
+
+    async Task GetGroupMembers(string groupName)
+    {
+        await httpClient.GetFromJsonAsync<IEnumerable<string>>($"HubService/GetMembers/{groupName}")!;
+    }
+
+    string FormatForeignMessage(string message)
+    {
+        var connectionId = message.Split(":")[0];
+        var userMessage = message.Split(":")[1];
+        return $"{userMessage}<br/><em>{connectionId}</em>";
+    }
+    string FormatDefaultMessage(string message)
+    {
+        var connectionId = message.Split(":")[0];
+        var userMessage = message.Split(":")[1];
+        return $"{userMessage}<br/><em>me</em>";
     }
 
     async Task Connect()
