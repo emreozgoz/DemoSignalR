@@ -4,6 +4,8 @@
 @inject SignalRConnection signalRConnection
 @implements IDisposable
 @inject HttpClient httpClient
+@inject IJSRuntime js
+
 
 <div class="row">
     <div class="col-md-3 mb-4">
@@ -43,7 +45,7 @@
                         <ul>
                             @foreach (string user in OnlineUsers)
                             {
-                                <li>@user</li>
+                                <li class="list-group-item list-group-item-action" @onclick="(()=>ChatUser(user))">@user</li>
                             }
                         </ul>
                     }
@@ -139,6 +141,7 @@
     IEnumerable<string> AvailableGroups = [];
     List<string> OnlineUsers = [];
     List<string> ChatMessages = [];
+    IEnumerable<string> ConnectedClients = [];
     protected override async Task OnInitializedAsync()
     {
         //SignalR bağlantısının durum değişikliklerini dinliyor
@@ -162,7 +165,7 @@
 
     void Subscriptions()
     {
-        signalRConnection.hubConnection.On<string>("AllClientsNotification", async (connectionId) =>
+        signalRConnection.hubConnection.On<string, List<string>>("AllClientsNotification", async (connectionId, connectedClients) =>
         {
             await InvokeAsync(() =>
             {
@@ -170,7 +173,7 @@
                 {
                     ConnectionId = connectionId;
                 }
-                OnlineUsers.Add($"{connectionId} has joined");
+                OnlineUsers = connectedClients;
                 StateHasChanged();
             });
         });
@@ -193,17 +196,33 @@
             });
         });
 
+        signalRConnection.hubConnection.On<List<string>>("RetrieveOldMessages", async (oldMessages) =>
+        {
+            await InvokeAsync(() =>
+            {
+                ChatMessages = oldMessages;
+                StateHasChanged();
+            });
+        });
+
     }
 
     static string ConnectionId = string.Empty;
+    static string ReceiverConnectionId = string.Empty;
     async Task SendMessage()
     {
-        if (!string.IsNullOrEmpty(ConnectionId))
+        if (!string.IsNullOrEmpty(ConnectionId) && string.IsNullOrEmpty(ReceiverConnectionId))
         {
             string userGroupName = await httpClient.GetStringAsync($"HubService/GetUserGroupName/{ConnectionId}");
             await signalRConnection.hubConnection.InvokeAsync("SendMessageToGroup", userGroupName, Message);
-            Message = string.Empty;
         }
+        else if (!string.IsNullOrEmpty(ConnectionId) && !string.IsNullOrEmpty(ReceiverConnectionId))
+        {
+            var id = ReceiverConnectionId.Trim().Split(" ")[0];
+            await signalRConnection.hubConnection.InvokeAsync("SendMessageToIndividual", id, Message);
+            ChatMessages.Add($"{ConnectionId}: {Message}");
+        }
+        Message = string.Empty;
     }
     private async Task GetGroups()
     {
@@ -248,7 +267,9 @@
 
     async Task Disconnect()
     {
+        ConnectionId = string.Empty;
         await signalRConnection.CloseConnection();
+        OnlineUsers!.Clear();
     }
 
     public void Dispose()
@@ -256,5 +277,31 @@
         //bir sınıfın ömrü sona erdiğinde veya artık kullanılmayacak duruma geldiğinde,
         // belleği ve bağlantıları düzgün bir şekilde serbest bırakmak için dispose yöntem kullanılır.
         signalRConnection.ConnectionStateChanged -= StateHasChanged;
+    }
+    bool CalledMessageRetrieval = false;
+    async void ChatUser(string receiverConnectionId)
+    {
+        var id = receiverConnectionId.Trim().Split(" ")[0];
+        if (Equals(ConnectionId, id))
+        {
+            await js.InvokeVoidAsync("alert", "You Cannot message to yourself");
+            return;
+        }
+        GroupName = receiverConnectionId;
+        ReceiverConnectionId = receiverConnectionId;
+        ChatMessages?.Clear();
+        if (!CalledMessageRetrieval)
+        {
+            try
+            {
+                await signalRConnection.hubConnection.InvokeAsync("RetrieveOldMessages");
+                CalledMessageRetrieval = true;
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
     }
 } 

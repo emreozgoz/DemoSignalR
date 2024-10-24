@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{F1815550-D671-4B32-875D-A6BE6E94A7BE}|WebAssembly\\WebAssembly.csproj|solutionrelative:webassembly\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{5ADFBF6F-8169-4845-99BB-D05578774778}|API\\API.csproj|c:\\repos\\demosignalr\\demosignalr\\api\\signalrclass\\signalrconnectionhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADFBF6F-8169-4845-99BB-D05578774778}|API\\API.csproj|solutionrelative:api\\signalrclass\\signalrconnectionhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F1815550-D671-4B32-875D-A6BE6E94A7BE}|WebAssembly\\WebAssembly.csproj|c:\\repos\\demosignalr\\demosignalr\\webassembly\\signalrconnections\\signalrconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F1815550-D671-4B32-875D-A6BE6E94A7BE}|WebAssembly\\WebAssembly.csproj|solutionrelative:webassembly\\signalrconnections\\signalrconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -26,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,7 +42,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "SignalRConnectionHub.cs",
+              "DocumentMoniker": "C:\\repos\\DemoSignalR\\DemoSignalR\\API\\SignalRClass\\SignalRConnectionHub.cs",
+              "RelativeDocumentMoniker": "API\\SignalRClass\\SignalRConnectionHub.cs",
+              "ToolTip": "C:\\repos\\DemoSignalR\\DemoSignalR\\API\\SignalRClass\\SignalRConnectionHub.cs",
+              "RelativeToolTip": "API\\SignalRClass\\SignalRConnectionHub.cs",
+              "ViewState": "AQIAADMAAAAAAAAAAAAYwEoAAABjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-24T09:15:51.497Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\repos\\DemoSignalR\\DemoSignalR\\API\\Program.cs",
               "RelativeDocumentMoniker": "API\\Program.cs",
@@ -51,7 +68,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "SignalRConnection.cs",
               "DocumentMoniker": "C:\\repos\\DemoSignalR\\DemoSignalR\\WebAssembly\\SignalRConnections\\SignalRConnection.cs",
               "RelativeDocumentMoniker": "WebAssembly\\SignalRConnections\\SignalRConnection.cs",
@@ -64,7 +81,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\repos\\DemoSignalR\\DemoSignalR\\WebAssembly\\Program.cs",
               "RelativeDocumentMoniker": "WebAssembly\\Program.cs",
@@ -83,7 +100,7 @@
               "RelativeDocumentMoniker": "WebAssembly\\Pages\\Home.razor",
               "ToolTip": "C:\\repos\\DemoSignalR\\DemoSignalR\\WebAssembly\\Pages\\Home.razor",
               "RelativeToolTip": "WebAssembly\\Pages\\Home.razor",
-              "ViewState": "AQIAAJkAAAAAAAAAAAApwKsAAAARAAAA",
+              "ViewState": "AQIAABcBAAAAAAAAAAAAAAcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-10-24T09:01:49.709Z",
               "EditorCaption": ""
