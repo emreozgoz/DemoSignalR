@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SignalR.Client;
 using System.Data;
+using System.Data.Common;
 
-namespace WEB.SignalRConnections
+namespace WebAssembly.SignalRConnections
 {
     public class SignalRConnection(NavigationManager NavManager)
     {

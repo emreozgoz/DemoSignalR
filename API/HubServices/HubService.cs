@@ -19,7 +19,7 @@ namespace API.HubServices
             List<string> allConnectionIds = [.. ConnectionGroups.Keys];
             List<string> groupMembers = [];
 
-            foreach (string connectionId in allConnectionIds)
+            foreach (var connectionId in allConnectionIds)
             {
                 var group = ConnectionGroups.FirstOrDefault(x => x.Key == connectionId).Value;
                 if (Equals(groupName, group))

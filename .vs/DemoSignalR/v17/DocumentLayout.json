@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "C:\\repos\\DemoSignalR\\DemoSignalR\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{ABF3EBA5-2D85-4DD6-9992-7E3997EACBEC}|WEB\\WEB.csproj|c:\\repos\\demosignalr\\demosignalr\\web\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{ABF3EBA5-2D85-4DD6-9992-7E3997EACBEC}|WEB\\WEB.csproj|solutionrelative:web\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{F1815550-D671-4B32-875D-A6BE6E94A7BE}|WebAssembly\\WebAssembly.csproj|c:\\repos\\demosignalr\\demosignalr\\webassembly\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F1815550-D671-4B32-875D-A6BE6E94A7BE}|WebAssembly\\WebAssembly.csproj|solutionrelative:webassembly\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5ADFBF6F-8169-4845-99BB-D05578774778}|API\\API.csproj|c:\\repos\\demosignalr\\demosignalr\\api\\hubservices\\hubservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5ADFBF6F-8169-4845-99BB-D05578774778}|API\\API.csproj|solutionrelative:api\\hubservices\\hubservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F1815550-D671-4B32-875D-A6BE6E94A7BE}|WebAssembly\\WebAssembly.csproj|c:\\repos\\demosignalr\\demosignalr\\webassembly\\signalrconnections\\signalrconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1815550-D671-4B32-875D-A6BE6E94A7BE}|WebAssembly\\WebAssembly.csproj|solutionrelative:webassembly\\signalrconnections\\signalrconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5ADFBF6F-8169-4845-99BB-D05578774778}|API\\API.csproj|c:\\repos\\demosignalr\\demosignalr\\api\\controllers\\hubservicecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5ADFBF6F-8169-4845-99BB-D05578774778}|API\\API.csproj|solutionrelative:api\\controllers\\hubservicecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5ADFBF6F-8169-4845-99BB-D05578774778}|API\\API.csproj|c:\\repos\\demosignalr\\demosignalr\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADFBF6F-8169-4845-99BB-D05578774778}|API\\API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1815550-D671-4B32-875D-A6BE6E94A7BE}|WebAssembly\\WebAssembly.csproj|c:\\repos\\demosignalr\\demosignalr\\webassembly\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1815550-D671-4B32-875D-A6BE6E94A7BE}|WebAssembly\\WebAssembly.csproj|solutionrelative:webassembly\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,41 +38,54 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "HubService.cs",
-              "DocumentMoniker": "C:\\repos\\DemoSignalR\\DemoSignalR\\API\\HubServices\\HubService.cs",
-              "RelativeDocumentMoniker": "API\\HubServices\\HubService.cs",
-              "ToolTip": "C:\\repos\\DemoSignalR\\DemoSignalR\\API\\HubServices\\HubService.cs",
-              "RelativeToolTip": "API\\HubServices\\HubService.cs",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAAwDMAAAAMAAAA",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\repos\\DemoSignalR\\DemoSignalR\\API\\Program.cs",
+              "RelativeDocumentMoniker": "API\\Program.cs",
+              "ToolTip": "C:\\repos\\DemoSignalR\\DemoSignalR\\API\\Program.cs",
+              "RelativeToolTip": "API\\Program.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAAABUAAAAyAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-20T10:37:59.292Z",
+              "WhenOpened": "2024-10-24T09:06:02.721Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "HubServiceController.cs",
-              "DocumentMoniker": "C:\\repos\\DemoSignalR\\DemoSignalR\\API\\Controllers\\HubServiceController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\HubServiceController.cs",
-              "ToolTip": "C:\\repos\\DemoSignalR\\DemoSignalR\\API\\Controllers\\HubServiceController.cs",
-              "RelativeToolTip": "API\\Controllers\\HubServiceController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAAMAAAA",
+              "DocumentIndex": 1,
+              "Title": "SignalRConnection.cs",
+              "DocumentMoniker": "C:\\repos\\DemoSignalR\\DemoSignalR\\WebAssembly\\SignalRConnections\\SignalRConnection.cs",
+              "RelativeDocumentMoniker": "WebAssembly\\SignalRConnections\\SignalRConnection.cs",
+              "ToolTip": "C:\\repos\\DemoSignalR\\DemoSignalR\\WebAssembly\\SignalRConnections\\SignalRConnection.cs",
+              "RelativeToolTip": "WebAssembly\\SignalRConnections\\SignalRConnection.cs",
+              "ViewState": "AQIAADQAAAAAAAAAAAAgwBkAAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-20T10:28:50.331Z",
+              "WhenOpened": "2024-10-24T09:02:44.098Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\repos\\DemoSignalR\\DemoSignalR\\WebAssembly\\Program.cs",
+              "RelativeDocumentMoniker": "WebAssembly\\Program.cs",
+              "ToolTip": "C:\\repos\\DemoSignalR\\DemoSignalR\\WebAssembly\\Program.cs",
+              "RelativeToolTip": "WebAssembly\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-24T09:02:54.92Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Home.razor",
-              "DocumentMoniker": "C:\\repos\\DemoSignalR\\DemoSignalR\\WEB\\Components\\Pages\\Home.razor",
-              "RelativeDocumentMoniker": "WEB\\Components\\Pages\\Home.razor",
-              "ToolTip": "C:\\repos\\DemoSignalR\\DemoSignalR\\WEB\\Components\\Pages\\Home.razor",
-              "RelativeToolTip": "WEB\\Components\\Pages\\Home.razor",
-              "ViewState": "AQIAAJkAAAAAAAAAAAApwKsAAAAAAAAA",
+              "DocumentMoniker": "C:\\repos\\DemoSignalR\\DemoSignalR\\WebAssembly\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "WebAssembly\\Pages\\Home.razor",
+              "ToolTip": "C:\\repos\\DemoSignalR\\DemoSignalR\\WebAssembly\\Pages\\Home.razor",
+              "RelativeToolTip": "WebAssembly\\Pages\\Home.razor",
+              "ViewState": "AQIAAJkAAAAAAAAAAAApwKsAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-19T21:18:04.667Z",
+              "WhenOpened": "2024-10-24T09:01:49.709Z",
               "EditorCaption": ""
             }
           ]

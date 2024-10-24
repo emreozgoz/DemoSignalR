@@ -1,7 +1,6 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.SignalR.Client
-@using WEB.SignalRConnections
-@rendermode InteractiveServer
+@using WebAssembly.SignalRConnections
 @inject SignalRConnection signalRConnection
 @implements IDisposable
 @inject HttpClient httpClient
@@ -164,14 +163,17 @@
     void Subscriptions()
     {
         signalRConnection.hubConnection.On<string>("AllClientsNotification", async (connectionId) =>
-     {
-         await InvokeAsync(() =>
-         {
-             ConnectionId = connectionId;
-             OnlineUsers.Add($"{connectionId} has joined");
-             StateHasChanged();
-         });
-     });
+        {
+            await InvokeAsync(() =>
+            {
+                if (string.IsNullOrEmpty(ConnectionId))
+                {
+                    ConnectionId = connectionId;
+                }
+                OnlineUsers.Add($"{connectionId} has joined");
+                StateHasChanged();
+            });
+        });
 
         signalRConnection.hubConnection.On<IEnumerable<string>>("NotifyGroupOfNewJoin", async (groupMembers) =>
         {
